@@ -6,6 +6,9 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  securityCodeExpiry: {
+    type: Date,
+  },
   isInvited: {
     type: Boolean,
     default: false
@@ -76,7 +79,7 @@ const userSchema = new Schema({
     type: String
   }
 }, {
-  timestamps: true, 
+  timestamps: true,
 });
 
 module.exports = mongoose.model('User', userSchema);
