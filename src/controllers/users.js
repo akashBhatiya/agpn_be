@@ -39,3 +39,20 @@ exports.sendSecurityCode = async (req, res) => {
         return res.status(500).json({status:"fail", message:"Internal Server Error"})
     }
 }
+
+exports.getCurrUser = async (req,res) => {
+
+    try{
+        const user = await User.findById(req.user._id);
+    
+        if(!user){
+            return res.status(200).json({status:"fail", messaage:"User not found"})
+        }
+        const token = jwt.sign({ _id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '30m' });
+        return res.status(200).json({status:"success", message:"User got successfully", user, token})
+    }catch(error){
+        console.log("Error getting logged in curr USer: ", error);
+        return res.status(500).json({status:"fail", message:"Internal Server Error"})
+    }
+
+}
